@@ -1,23 +1,40 @@
-import logo from './logo.svg';
+
+import { useEffect, useState } from 'react';
 import './App.css';
+import ContactList from './Components/ContactList';
+import Form from './Components/Form';
+import Header from './Components/Header';
+import uuid4 from 'uuid4';
 
 function App() {
+  const localStorageKey = "list";
+
+  const [list, setList] = useState(()=>{
+    
+    return JSON.parse(localStorage.getItem(localStorageKey))
+  || []});
+
+  useEffect(()=>{
+    localStorage.setItem(localStorageKey, JSON.stringify(list))
+  }, [list])
+
+  const addContact = (data) => {
+    console.log(data, 'from App.js');
+    setList([...list, {id: uuid4(), data}]);
+  }
+
+  const removeContact = (id) => {
+    const updatedList = list.filter((val)=>{
+      return val.id!== id;
+    })
+
+    setList(updatedList);
+  }
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Header/>
+      <Form addcontact = {addContact}/>
+      <ContactList List = {list} removeContact = {removeContact}/>
     </div>
   );
 }
