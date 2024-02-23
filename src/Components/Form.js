@@ -31,11 +31,11 @@ e.preventDefault();
     <>
       <h2>Share your details here!!</h2>
 
-      <form>
+      <form onSubmit={collectData}>
         <div><input className='form-field' type='text' placeholder='enter your name' name='name' value={data.name} onChange={handleChange} required/></div>
         <div><input className='form-field' type='email' placeholder='enter your email id' name='email' value={data.email} onChange={handleChange} required/></div>
         <div><input className='form-field' type='number' placeholder='enter your contact number' name='phone' value={data.phone} onChange={handleChange} required/></div>
-        <button type='submit' onClick={collectData}>Add Contact</button>
+        <button type='submit'>Add Contact</button>
       </form>
     </>
   )
